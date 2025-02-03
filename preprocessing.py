@@ -20,3 +20,4 @@ def preprocess_image(image_path, save_path="1p.png"):
 
 if __name__ == "__main__":
     preprocess_image("2.png")  # Run preprocessing
+
