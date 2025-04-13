@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    
+    <meta name="experiment-short-name" content="pvc-hot-water-coupling">
+    <meta name="developer-institute" content="Amrita Vishwa Vidyapeetham">
+    <meta name="learning-unit" content="Automated PVC Hot Water Coupling Using AI & Robotics">
+    <meta name="task-name" content="Model">
+    
+    <title>Robotic Arm Model - PVC Hot Water Coupling</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/github-markdown.min.css">
+    <link rel="stylesheet" href="./assets/css/vlabs-style.css">
+    <link rel="stylesheet" href="./assets/css/toast.css">
+    <link rel="stylesheet" href="./assets/katex_assets/katex.min.css">
+    
+    <script src="./assets/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Blue-based color scheme */
+      :root {
+        --primary-blue: #1a73e8;
+        --secondary-blue: #4285f4;
+        --light-blue: #e8f0fe;
+        --dark-blue: #174ea6;
+        --text-dark: #202124;
+      }
+      
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--text-dark);
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-top: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.4rem;
+        color: var(--dark-blue);
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+        color: var(--dark-blue);
+      }
+      
+      h2, h3 {
+        font-weight: 800;
+      }
+      
+      .navbar {
+        background-color: var(--primary-blue) !important;
+        color: white !important;
+      }
+      
+      /* Add nav-menu styles for consistency */
+      .nav-menu {
+        background-color: var(--light-blue);
+        border-right: 1px solid #ddd;
+      }
+      
+      .nav-menu-body a {
+        color: var(--dark-blue) !important;
+        text-decoration: none;
+        display: block;
+        padding: 0.5rem 1rem;
+        margin: 2px 0;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      
+      .nav-menu-body a:hover {
+        background-color: rgba(66, 133, 244, 0.1);
+        font-weight: bold;
+      }
+      
+      /* Ensure consistent sidebar styling */
+      .sidebar-nav {
+        position: sticky;
+        top: 0;
+        background: var(--light-blue);
+        border-right: 1px solid #ddd;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 1rem 0;
+      }
+      
+      .chapter-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: var(--dark-blue);
+        text-decoration: none;
+        border-left: 4px solid transparent;
+        transition: all 0.2s;
+      }
+      
+      .chapter-link:hover, .chapter-link:focus {
+        background-color: rgba(66, 133, 244, 0.1);
+        border-left-color: var(--primary-blue);
+        font-weight: bold;
+      }
+      
+      .page-title {
+        color: var(--primary-blue);
+        padding: 1rem;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+      
+      .course-info {
+        color: var(--dark-blue);
+        font-size: 0.9rem;
+        padding: 0 1rem 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .vlabs-footer {
+        background-color: var(--dark-blue) !important;
+      }
+      
+      .video-container {
+        margin: 30px 0;
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+      }
+      
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      
+      .feature-card {
+        background-color: var(--light-blue);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary-blue);
+      }
+      
+      .feature-card h4 {
+        color: var(--primary-blue);
+        margin-top: 0;
+        font-weight: bold;
+      }
+      
+      .feature-list {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      
+      .feature-list li {
+        padding: 5px 0;
+        padding-left: 25px;
+        position: relative;
+      }
+      
+      .feature-list li:before {
+        content: "🔹";
+        position: absolute;
+        left: 0;
+        color: var(--primary-blue);
+      }
+      
+      hr.divider {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(26, 115, 232, 0.75), rgba(0, 0, 0, 0));
+        margin: 30px 0;
+      }
+    </style>
+</head>
+
+<body class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between">
+    <header class="vlabs-header sticky-top bg-white">
+        <nav class="p-0 navbar navbar-light d-flex align-items-stretch" style="background-color: #1a73e8 !important;">
+            <div class="d-flex justify-content-center w-100 align-items-center p-3">
+                <span class="text-white font-weight-bold">Automated PVC Hot Water Coupling Using AI & Robotics</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid flex-fill d-flex flex-column vlabs-page-main">
+        <div class="row flex-grow-1 d-flex flex-nowrap flex-column flex-lg-row">
+            <div class="col-lg-3 col-xl-2 sidebar-nav d-none d-lg-block" id="menu">
+                <div class="page-title">MFC ROBOTICS - Group 9</div>
+                <div class="course-info">
+                    22MAT230: Mathematics for Computing<br>
+                    22AlE214: Introduction to Al & Robotics
+                </div>
+                
+                <a href="index.html#introduction" class="chapter-link">1. Introduction</a>
+                <a href="index.html#problem-statement" class="chapter-link">2. Problem Statement</a>
+                <a href="index.html#proposed-solution" class="chapter-link">3. Proposed Solution</a>
+                <a href="index.html#methodology" class="chapter-link">4. Methodology</a>
+                <a href="index.html#technical-implementation" class="chapter-link">5. Technical Implementation</a>
+                <a href="index.html#progress-and-challenges" class="chapter-link">6. Progress and Challenges</a>
+                <a href="index.html#literature-review" class="chapter-link">7. Literature Review</a>
+                <a href="index.html#advanced-mathematical-foundations" class="chapter-link">8. Advanced Mathematical Foundations</a>
+                <a href="index.html#experimental-results" class="chapter-link">9. Experimental Results</a>
+                <a href="index.html#conclusion" class="chapter-link">10. Conclusion</a>
+                <a href="index.html#acknowledgments" class="chapter-link">11. Acknowledgments</a>
+                <a href="index.html#references" class="chapter-link">12. References</a>
+                <a href="model.html" class="chapter-link" style="background-color: rgba(66, 133, 244, 0.1); font-weight: bold; border-left-color: var(--primary-blue);">13. Robot Model Demo</a>
+                <a href="simulation.html" class="chapter-link">14. RoboDK Simulation</a>
+                <a href="gripper.html" class="chapter-link">15. 3-Finger Adaptive Gripper</a>
+            </div>
+
+            <div class="col-lg-9 col-xl-10 vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+                <div class="text-center fix-spacing">
+                    <h1 id="pipe-coupling-automation">Pipe Coupling Automation Robotic Arm</h1>
+                    <h3 id="innovative-approach">An Innovative Approach to PVC Hot Water Coupling</h3>
+                </div>
+                
+                <p>The <strong>Pipe Coupling Automation Robotic Arm</strong>, equipped with a <strong>3-finger adaptive gripper</strong>, is a cutting-edge solution designed to automate the traditionally labor-intensive process of PVC hot water pipe coupling. By leveraging robotics, real-time computer vision, and AI-driven motion control, this system ensures unprecedented levels of precision, scalability, and efficiency for industrial applications.</p>
+                
+                <div class="video-container">
+                    <video controls>
+                        <source src="./assets/model/Model.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <hr class="divider">
+                
+                <h2 id="detailed-description">Detailed Description</h2>
+                <p>The <strong>Pipe Coupling Automation Arm</strong> is a state-of-the-art robotic system specifically created to handle the critical stages of PVC pipe coupling with minimal human intervention. The system is designed to:</p>
+                <ol>
+                    <li><strong>Detect and pick up PVC pipes</strong> using advanced visual recognition.</li>
+                    <li><strong>Heat pipes</strong> in a hot water bath for softening.</li>
+                    <li><strong>Precisely place softened pipes</strong> into molds for coupling.</li>
+                </ol>
+                
+                <p>Paired with a <strong>3-finger adaptive gripper</strong>, the robotic arm can securely handle pipes of varying sizes and shapes, ensuring a reliable and repeatable process. This innovative solution is tailored to meet the demands of high-volume, precision-driven industries.</p>
+                
+                <hr class="divider">
+                
+                <h2 id="features">Features</h2>
+                
+                <div class="feature-card">
+                    <h4>Robotic Arm Highlights</h4>
+                    <ol class="feature-list">
+                        <li>
+                            <strong>High Precision and Repeatability:</strong>
+                            <ul>
+                                <li>Ensures consistent pipe handling, placement, and coupling with minimal error.</li>
+                                <li>Employs <strong>inverse kinematics</strong> for accurate joint movements.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Advanced Motion Planning:</strong>
+                            <ul>
+                                <li>Optimized for PVC pipe coupling tasks, including precise dipping into hot water and mold placement.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Collaborative Design:</strong>
+                            <ul>
+                                <li>Safe to operate alongside human workers, with built-in collision detection and safety measures.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Customizable End Effector:</strong>
+                            <ul>
+                                <li>Supports interchangeable tools for future adaptability, including the <strong>3-finger adaptive gripper</strong>.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>3-Finger Adaptive Gripper</h4>
+                    <ol class="feature-list">
+                        <li>
+                            <strong>Adaptive Grasping:</strong>
+                            <ul>
+                                <li>Can securely hold a wide range of objects, including cylindrical pipes, irregular shapes, and fragile items.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Force Optimization:</strong>
+                            <ul>
+                                <li>Dynamically adjusts gripping force to avoid pipe deformation or slippage.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Multiple Gripping Modes:</strong>
+                            <ul>
+                                <li>Supports pinch, wide, and encompassing grips for versatile handling capabilities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Industrial Durability:</strong>
+                            <ul>
+                                <li>Built with robust materials to withstand harsh industrial environments.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>AI & Vision-Driven Features</h4>
+                    <ol class="feature-list">
+                        <li>
+                            <strong>Pipe Detection:</strong>
+                            <ul>
+                                <li>Employs <strong>YOLOv8 object detection</strong> to accurately locate PVC pipes on a flat surface.</li>
+                                <li>Converts 2D image coordinates into real-world 3D positions for precise robotic handling.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Real-Time Feedback:</strong>
+                            <ul>
+                                <li>Continuous monitoring ensures accurate placement and immediate error detection.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Optimized Workflow:</strong>
+                            <ul>
+                                <li>Integrates motion planning and adaptive gripping for seamless operation across all production stages.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <hr class="divider">
+                
+                <h2 id="use-cases">Use Cases</h2>
+                <p>The <strong>Pipe Coupling Automation Robotic Arm</strong> is ideal for various industries and applications:</p>
+                
+                <ol>
+                    <li>
+                        <strong>PVC Pipe Manufacturing:</strong>
+                        <ul>
+                            <li>Automates the coupling process, reducing labor costs and improving consistency.</li>
+                            <li>Handles high production volumes efficiently.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Material Handling:</strong>
+                        <ul>
+                            <li>Adapts to other cylindrical or irregular objects, such as metal rods or plastic components.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Custom Industrial Applications:</strong>
+                        <ul>
+                            <li>Easily integrates into existing production lines for tasks requiring precision picking and placing.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Research and Education:</strong>
+                        <ul>
+                            <li>Serves as a platform for robotics teaching, AI experimentation, and development of advanced gripping strategies.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Inspection and Quality Control:</strong>
+                        <ul>
+                            <li>Ensures consistent product quality by incorporating vision-based inspection into the workflow.</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <hr class="divider">
+                
+                <h2 id="why-choose">Why Choose the Pipe Coupling Automation Robotic Arm?</h2>
+                <ul>
+                    <li><strong>Efficiency:</strong> Automates repetitive tasks, reducing operational costs and increasing throughput.</li>
+                    <li><strong>Safety:</strong> Eliminates risks associated with manual handling of hot materials.</li>
+                    <li><strong>Precision:</strong> Ensures consistent, high-quality coupling for every pipe.</li>
+                    <li><strong>Scalability:</strong> Adapts to different pipe sizes and production volumes with minimal setup changes.</li>
+                    <li><strong>Future-Ready:</strong> Supports integration with advanced AI algorithms for further optimization.</li>
+                </ul>
+                
+                <hr class="divider">
+                
+                <h2 id="conclusion">Conclusion</h2>
+                <p>The <strong>Pipe Coupling Automation Robotic Arm</strong> is a revolutionary step forward in industrial automation. By combining robotics, AI, and adaptive gripping technology, this system automates the PVC hot water coupling process with unmatched precision and reliability. It addresses the challenges of inconsistency, labor dependency, and scalability, paving the way for a smarter, safer, and more efficient future in manufacturing.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-light pt-2 vlabs-footer d-flex flex-column">
+        <div class="row px-5 mx-0">
+            <div class="col d-flex flex-column">
+                <span class="font-weight-bold vlabs-footer-section-title pb-2 mb-3">Course Information</span>
+                <span class="text-light">22MAT230: Mathematics for Computing (MFC4)</span>
+                <span class="text-light">22AlE214: Introduction to Al & Robotics</span>
+            </div>
+        </div>
+        <div class="m-0 py-2 text-center" style="font-family: &quot;Open Sans&quot;, sans-serif; background: #212121;">
+            S4 Project | MFC ROBOTICS Group 9 (AIE "A" Batch)
+        </div>
+    </footer>
+    <script src="./assets/js/toggleSidebar.js"></script>
+    <script src="./assets/js/event-handler.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+</body>
+</html>

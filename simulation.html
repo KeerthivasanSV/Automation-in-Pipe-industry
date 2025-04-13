@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    
+    <meta name="experiment-short-name" content="pvc-hot-water-coupling">
+    <meta name="developer-institute" content="Amrita Vishwa Vidyapeetham">
+    <meta name="learning-unit" content="Automated PVC Hot Water Coupling Using AI & Robotics">
+    <meta name="task-name" content="Simulation">
+    
+    <title>Robotic Arm Simulation - PVC Hot Water Coupling</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/github-markdown.min.css">
+    <link rel="stylesheet" href="./assets/css/vlabs-style.css">
+    <link rel="stylesheet" href="./assets/css/toast.css">
+    <link rel="stylesheet" href="./assets/katex_assets/katex.min.css">
+    
+    <script src="./assets/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Blue-based color scheme */
+      :root {
+        --primary-blue: #1a73e8;
+        --secondary-blue: #4285f4;
+        --light-blue: #e8f0fe;
+        --dark-blue: #174ea6;
+        --text-dark: #202124;
+      }
+      
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--text-dark);
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-top: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.4rem;
+        color: var(--dark-blue);
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+        color: var(--dark-blue);
+      }
+      
+      h2, h3 {
+        font-weight: 800;
+      }
+      
+      .navbar {
+        background-color: var(--primary-blue) !important;
+        color: white !important;
+      }
+      
+      /* Nav menu styles */
+      .nav-menu {
+        background-color: var(--light-blue);
+        border-right: 1px solid #ddd;
+      }
+      
+      .nav-menu-body a {
+        color: var(--dark-blue) !important;
+        text-decoration: none;
+        display: block;
+        padding: 0.5rem 1rem;
+        margin: 2px 0;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      
+      .nav-menu-body a:hover {
+        background-color: rgba(66, 133, 244, 0.1);
+        font-weight: bold;
+      }
+      
+      /* Sidebar styles */
+      .sidebar-nav {
+        position: sticky;
+        top: 0;
+        background: var(--light-blue);
+        border-right: 1px solid #ddd;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 1rem 0;
+      }
+      
+      .chapter-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: var(--dark-blue);
+        text-decoration: none;
+        border-left: 4px solid transparent;
+        transition: all 0.2s;
+      }
+      
+      .chapter-link:hover, .chapter-link:focus {
+        background-color: rgba(66, 133, 244, 0.1);
+        border-left-color: var(--primary-blue);
+        font-weight: bold;
+      }
+      
+      .page-title {
+        color: var(--primary-blue);
+        padding: 1rem;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+      
+      .course-info {
+        color: var(--dark-blue);
+        font-size: 0.9rem;
+        padding: 0 1rem 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .vlabs-footer {
+        background-color: var(--dark-blue) !important;
+      }
+      
+      .video-container {
+        margin: 15px 0 30px;
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+      }
+      
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      
+      .component-list {
+        background-color: var(--light-blue);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        border-left: 4px solid var(--primary-blue);
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      
+      .component-list h3 {
+        color: var(--primary-blue);
+        margin-top: 0;
+      }
+      
+      .component-list ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      
+      .component-list ul li {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .component-list ul li:last-child {
+        border-bottom: none;
+      }
+      
+      .component-group {
+        font-weight: bold;
+        color: var(--dark-blue);
+        margin-top: 10px;
+      }
+      
+      .component-item {
+        padding-left: 20px;
+        color: var(--text-dark);
+      }
+      
+      hr.divider {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(26, 115, 232, 0.75), rgba(0, 0, 0, 0));
+        margin: 20px 0;
+      }
+      
+      .simulation-highlights {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+      
+      .highlight-card {
+        flex: 0 0 calc(33.33% - 20px);
+        background-color: var(--light-blue);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-bottom: 3px solid var(--primary-blue);
+        min-width: 200px;
+      }
+      
+      .highlight-card h4 {
+        color: var(--primary-blue);
+        font-size: 1.1rem;
+        margin-top: 0;
+      }
+      
+      .highlight-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+      
+      @media (max-width: 768px) {
+        .highlight-card {
+          flex: 0 0 100%;
+        }
+      }
+      
+      .vlabs-header {
+        min-height: 60px;
+      }
+      
+      .fix-spacing h1, .fix-spacing h3 {
+        margin: 0.5rem 0;
+      }
+      
+      .simulation-introduction {
+        margin-bottom: 10px;
+      }
+      
+      .vlabs-page-content {
+        padding-top: 15px;
+      }
+      
+      .scroll-indicator {
+        text-align: center;
+        margin: 0 auto 10px;
+        font-size: 0.9rem;
+        color: var(--primary-blue);
+        opacity: 0.8;
+      }
+    </style>
+</head>
+
+<body class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between">
+    <header class="vlabs-header sticky-top bg-white">
+        <nav class="p-0 navbar navbar-light d-flex align-items-stretch" style="background-color: #1a73e8 !important;">
+            <div class="d-flex justify-content-center w-100 align-items-center p-3">
+                <span class="text-white font-weight-bold">Automated PVC Hot Water Coupling Using AI & Robotics</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid flex-fill d-flex flex-column vlabs-page-main">
+        <div class="row flex-grow-1 d-flex flex-nowrap flex-column flex-lg-row">
+            <div class="col-lg-3 col-xl-2 sidebar-nav d-none d-lg-block" id="menu">
+                <div class="page-title">MFC ROBOTICS - Group 9</div>
+                <div class="course-info">
+                    22MAT230: Mathematics for Computing<br>
+                    22AlE214: Introduction to Al & Robotics
+                </div>
+                
+                <a href="index.html#introduction" class="chapter-link">1. Introduction</a>
+                <a href="index.html#problem-statement" class="chapter-link">2. Problem Statement</a>
+                <a href="index.html#proposed-solution" class="chapter-link">3. Proposed Solution</a>
+                <a href="index.html#methodology" class="chapter-link">4. Methodology</a>
+                <a href="index.html#technical-implementation" class="chapter-link">5. Technical Implementation</a>
+                <a href="index.html#progress-and-challenges" class="chapter-link">6. Progress and Challenges</a>
+                <a href="index.html#literature-review" class="chapter-link">7. Literature Review</a>
+                <a href="index.html#advanced-mathematical-foundations" class="chapter-link">8. Advanced Mathematical Foundations</a>
+                <a href="index.html#experimental-results" class="chapter-link">9. Experimental Results</a>
+                <a href="index.html#conclusion" class="chapter-link">10. Conclusion</a>
+                <a href="index.html#acknowledgments" class="chapter-link">11. Acknowledgments</a>
+                <a href="index.html#references" class="chapter-link">12. References</a>
+                <a href="model.html" class="chapter-link">13. Robot Model Demo</a>
+                <a href="simulation.html" class="chapter-link" style="background-color: rgba(66, 133, 244, 0.1); font-weight: bold; border-left-color: var(--primary-blue);">14. RoboDK Simulation</a>
+                <a href="gripper.html" class="chapter-link">15. 3-Finger Adaptive Gripper</a>
+            </div>
+
+            <div class="col-lg-9 col-xl-10 vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+                <div class="text-center fix-spacing">
+                    <h1 id="robodk-simulation">RoboDK Simulation of PVC Pipe Coupling Automation</h1>
+                    <h3 id="complete-process-simulation">Complete Process Simulation of the Robotic Automation System</h3>
+                </div>
+                
+                <p class="simulation-introduction">This simulation demonstrates the complete workflow of our PVC hot water coupling automation system using RoboDK, an industrial robot simulation software. The simulation includes the entire process from pipe detection to final placement, showcasing the precision movement and coordination of the robotic arm throughout the manufacturing cycle.</p>
+                
+                <div class="video-container">
+                    <video controls>
+                        <source src="./assets/simulation/Simulation.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="scroll-indicator">Scroll down for more details ↓</div>
+                
+                <hr class="divider">
+                
+                <h2 id="simulation-overview">Simulation Overview</h2>
+                <p>The RoboDK simulation provides a comprehensive visualization of our automated PVC pipe coupling system, demonstrating how the UR10 robotic arm interacts with various components of the production environment. The simulation showcases:</p>
+                
+                <div class="simulation-highlights">
+                    <div class="highlight-card">
+                        <h4>Precision Handling</h4>
+                        <p>Accurate picking and placement of PVC pipes with the custom gripper</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4>Process Workflow</h4>
+                        <p>Complete simulation of pipe movement from pallet to hot water bath to mold</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4>Robot Kinematics</h4>
+                        <p>Realistic motion planning and inverse kinematics implementation</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4>Visual System</h4>
+                        <p>Integration of camera for pipe detection and position verification</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4>End Effector Operation</h4>
+                        <p>Demonstration of the gripper's ability to handle PVC pipe components</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4>Production Environment</h4>
+                        <p>Complete layout with pallet, water bath, and molding station</p>
+                    </div>
+                </div>
+                
+                <hr class="divider">
+                
+                <h2 id="simulation-components">Simulation Components</h2>
+                <p>Our RoboDK simulation includes the following components and elements:</p>
+                
+                <div class="component-list">
+                    <h3>Project Components Hierarchy</h3>
+                    <ul>
+                        <li class="component-group">Project_AutomationPipeCouplingArm</li>
+                        <li class="component-group">UR 10 Base A</li>
+                        <li class="component-item">UR10A</li>
+                        <li class="component-item">GripperA</li>
+                        <li class="component-item">TCPA</li>
+                        <li class="component-item">TCP A</li>
+                        <li class="component-group">PalletA</li>
+                        <li class="component-item">box100mm</li>
+                        <li class="component-item">PalletApproachA</li>
+                        <li class="component-item">ConvApproachA</li>
+                        <li class="component-group">WaterbathReference</li>
+                        <li class="component-item">Put Waterbath</li>
+                        <li class="component-item">SetSimulationParams</li>
+                        <li class="component-item">PrepareSimulation</li>
+                        <li class="component-item">SimulateCamera</li>
+                        <li class="component-item">PartsToWaterbath</li>
+                        <li class="component-item">Plane 1m x 1m</li>
+                        <li class="component-item">Camera 1</li>
+                        <li class="component-group">Mold</li>
+                        <li class="component-item">Put Mold</li>
+                        <li class="component-item">MoldApproach</li>
+                        <li class="component-item">PartsToMold</li>
+                        <li class="component-item">Parts according to parameters defined</li>
+                        <li class="component-item">Europallet</li>
+                    </ul>
+                </div>
+                
+                <h2 id="simulation-details">Simulation Implementation Details</h2>
+                <p>The simulation was created using RoboDK industrial robot simulation software, which provides accurate modeling of robot kinematics, environments, and process workflows. Key aspects of the simulation include:</p>
+                
+                <ol>
+                    <li>
+                        <strong>Robot Model:</strong> The simulation uses the Universal Robots UR10 model, a collaborative industrial robot with 6 degrees of freedom, ideal for the precise movements required in PVC pipe handling.
+                    </li>
+                    <li>
+                        <strong>Custom Gripper Design:</strong> A specialized gripper was modeled to demonstrate the actual grasping mechanism designed for the PVC pipes.
+                    </li>
+                    <li>
+                        <strong>Complete Workflow:</strong> The simulation demonstrates the entire process flow:
+                        <ul>
+                            <li>Detecting and picking pipes from the pallet</li>
+                            <li>Transporting pipes to the hot water bath</li>
+                            <li>Precise submersion and timing in the water bath</li>
+                            <li>Transport to the molding station</li>
+                            <li>Accurate placement in the mold</li>
+                            <li>Return to home position for next cycle</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Camera Integration:</strong> Two virtual cameras were integrated to simulate the vision system that detects pipe positions and validates proper placement.
+                    </li>
+                    <li>
+                        <strong>Path Planning:</strong> Collision-free path planning between stations ensures safe and efficient movement of the robotic arm.
+                    </li>
+                </ol>
+                
+                <hr class="divider">
+                
+                <h2 id="simulation-benefits">Benefits of RoboDK Simulation</h2>
+                <p>Using RoboDK for simulation before physical implementation offers several advantages:</p>
+                
+                <ul>
+                    <li><strong>Risk Reduction:</strong> Validates the automation concept without the expense of physical prototyping</li>
+                    <li><strong>Process Optimization:</strong> Allows for refinement of movement paths, timing, and station layout</li>
+                    <li><strong>Training Tool:</strong> Serves as an educational resource for understanding the complete automation process</li>
+                    <li><strong>Client Visualization:</strong> Provides stakeholders with a clear visualization of the proposed solution</li>
+                    <li><strong>Code Generation:</strong> RoboDK can generate robot-specific code for implementation on the actual hardware</li>
+                </ul>
+                
+                <p>This simulation represents a critical step in our development process, bridging the gap between theoretical design and physical implementation of the automated PVC hot water coupling system.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-light pt-2 vlabs-footer d-flex flex-column">
+        <div class="row px-5 mx-0">
+            <div class="col d-flex flex-column">
+                <span class="font-weight-bold vlabs-footer-section-title pb-2 mb-3">Course Information</span>
+                <span class="text-light">22MAT230: Mathematics for Computing (MFC4)</span>
+                <span class="text-light">22AlE214: Introduction to Al & Robotics</span>
+            </div>
+        </div>
+        <div class="m-0 py-2 text-center" style="font-family: &quot;Open Sans&quot;, sans-serif; background: #212121;">
+            S4 Project | MFC ROBOTICS Group 9 (AIE "A" Batch)
+        </div>
+    </footer>
+    <script src="./assets/js/toggleSidebar.js"></script>
+    <script src="./assets/js/event-handler.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+</body>
+</html>
